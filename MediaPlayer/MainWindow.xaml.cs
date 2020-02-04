@@ -1,28 +1,28 @@
 ﻿using Microsoft.Win32;
 using System;
+using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Threading;
 
 namespace MediaPlayer
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
     public partial class MainWindow : Window
     {
-        //public static int intVolume;
-
-        DispatcherTimer timer;
+        private bool fullscreen = false;
+        private DispatcherTimer DoubleClickTimer = new DispatcherTimer();
+        private DispatcherTimer timer;
 
         public MainWindow()
         {
             InitializeComponent();
+
+            DoubleClickTimer.Interval = TimeSpan.FromMilliseconds(GetDoubleClickTime());
+            DoubleClickTimer.Tick += (s, e) => DoubleClickTimer.Stop();
         }
 
         private void PlayButton_Click(object sender, RoutedEventArgs e)
         {
-           // intVolume = (int)PlayedMedia.Volume * 100;
             PlayedMedia.Play();
 
             if (timer != null)
@@ -31,6 +31,7 @@ namespace MediaPlayer
         private void StopButton_Click(object sender, RoutedEventArgs e)
         {
             PlayedMedia.Stop();
+            MediaSlider.Value = 0;
 
             if (timer != null)
                 timer.Stop();
@@ -77,14 +78,11 @@ namespace MediaPlayer
             };
 
             timer.Tick += Timer_Tick;
-
-            timer.Start();
         }
 
         private void Timer_Tick(object sender, EventArgs e)
         {
             MediaSlider.Value = PlayedMedia.Position.TotalSeconds;
-
         }
 
         private void MediaSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
@@ -107,5 +105,37 @@ namespace MediaPlayer
             if (timer != null)
                 timer.Start();
         }
+
+        private void PlayedMedia_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            if (!DoubleClickTimer.IsEnabled)
+            {
+                DoubleClickTimer.Start();
+            }
+            else
+            {
+                if (!fullscreen)
+                {
+                    this.WindowStyle = WindowStyle.None;
+                    this.WindowState = WindowState.Maximized;
+                    ToolsGrid.Visibility = Visibility.Collapsed;
+                    MenuBar.Visibility = Visibility.Collapsed;
+                    //PlayedMedia.Cursor = Cursors.None;
+                }
+                else
+                {
+                    this.WindowStyle = WindowStyle.SingleBorderWindow;
+                    this.WindowState = WindowState.Normal;
+                    ToolsGrid.Visibility = Visibility.Visible;
+                    MenuBar.Visibility = Visibility.Visible;
+                   //PlayedMedia.Cursor = Cursors.Arrow;
+                }
+
+                fullscreen = !fullscreen;
+            }
+        }
+
+        [DllImport("user32.dll")]
+        private static extern uint GetDoubleClickTime();
     }
 }
