@@ -4,6 +4,8 @@ using System.Windows.Data;
 
 namespace MediaPlayer
 {
+    //Show volume using %
+
     [ValueConversion(typeof(double), typeof(int))]
     class VolumeConverter : IValueConverter
     {

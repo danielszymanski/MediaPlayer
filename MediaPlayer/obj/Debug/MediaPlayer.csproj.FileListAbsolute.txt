@@ -13,3 +13,4 @@ D:\repos\MediaPlayer\MediaPlayer\obj\Debug\MediaPlayer.csproj.GenerateResource.c
 D:\repos\MediaPlayer\MediaPlayer\obj\Debug\MediaPlayer.exe
 D:\repos\MediaPlayer\MediaPlayer\obj\Debug\MediaPlayer.pdb
 D:\repos\MediaPlayer\MediaPlayer\obj\Debug\GeneratedInternalTypeHelper.g.cs
+D:\repos\MediaPlayer\MediaPlayer\obj\Debug\MediaPlayer.csproj.CoreCompileInputs.cache

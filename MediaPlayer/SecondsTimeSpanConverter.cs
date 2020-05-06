@@ -6,6 +6,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Data;
 
+//Converter class
+
 namespace MediaPlayer
 {
     [ValueConversion(typeof(double), typeof(TimeSpan))]

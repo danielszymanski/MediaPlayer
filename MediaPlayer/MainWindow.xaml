@@ -30,7 +30,9 @@
                         Executed="OpenBinding_Executed"/>
     </Window.CommandBindings>
 
+    
     <Window.Resources>
+
         <Style TargetType="Button" x:Key="MediaButton">
             <Setter Property="Margin" Value="10"/>
             <Setter Property="Padding" Value="10"/>
